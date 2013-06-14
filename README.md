@@ -1,1 +1,1 @@
-THIS PROJECT IS DONE IN THE SUMMER OF 2013 IN INDIAN INSTITUTE OF SCIENCE BANGALORE AS PART OF RESEARCH INTERNSHIP UNDER PROF.SHALABH BHATNAGAR
+This project is an application of Reinforcement Learning to finding Energy management policies in Sensor nodes. This project is done in the summer of 2013 as a part of Research Internship at Stochastic Systems Lab, Indian Institute of Science, Bangalore under the supervision of Prof. Shalabh Bhatnagar.
