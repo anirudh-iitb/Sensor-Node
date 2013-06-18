@@ -28,6 +28,8 @@ public class SensorAgent implements AgentInterface
 	private double epsilon = 0.1;
 	private double initial = 0.0;
 	private double numSteps = 1.0;//NUMBER OF STEPS FOR DECAYING STEPSIZE
+	private double average_reward = 0.0;
+	private double beta_stepsize = 0.1;
 
 	private int numStates;
 	private int numActions;
@@ -41,6 +43,7 @@ public class SensorAgent implements AgentInterface
 	private boolean rel_qlearning = false;
 	private boolean greedy = false;
 	private boolean mto = false;
+	private boolean rlearning = false;
 
 	double avg_reward;//AVERAGE COST WHILE EVALUATING THE AGENT
 	double numOfSteps;//NUMBER OF STEPS FOR CALCULATING AVERAGE COST
@@ -58,6 +61,8 @@ public class SensorAgent implements AgentInterface
 		numOfSteps = 0.0;
 		numSteps = 1.0;
 		alpha_stepsize = 0.1;
+		average_reward = 0.0;
+		beta_stepsize = 0.1;
 
 		TaskSpec spec = new TaskSpec(taskspec);
 		numStates = spec.getDiscreteObservationRange(0).getMax()+1;
@@ -111,7 +116,37 @@ public class SensorAgent implements AgentInterface
 
 		//assert (newActionInt<=newStateInt%51);
 		if(newActionInt>newStateInt%51) System.out.println("FAIL");
-		if(qlearning)
+		if(rlearning)
+		{
+			int minActionInt = 0;
+			for(int i=0; i<numActions; i++)
+			{
+				if(valuefunction[i][newStateInt]<valuefunction[minActionInt][newStateInt]) minActionInt = i;
+			}
+
+			double Q_sa = valuefunction[lastActionInt][lastStateInt];
+			double Q_sprime_aprime = valuefunction[minActionInt][newStateInt];
+
+			double new_Q_sa = Q_sa + alpha_stepsize*(reward - average_reward + Q_sprime_aprime - Q_sa);
+			if(!freezeLearning){
+				valuefunction[lastActionInt][lastStateInt] = new_Q_sa;
+				double minValue = new_Q_sa;
+				for(int i=0;i<numActions; i++)
+				{
+					if(valuefunction[i][lastStateInt]<minValue) minValue = valuefunction[i][lastStateInt];
+				}
+				if(minValue==new_Q_sa)
+				{
+					average_reward = average_reward + beta_stepsize*(reward - average_reward + Q_sprime_aprime - minValue);
+				}
+				if(startDecay){
+					alpha_stepsize = (alpha_stepsize * numSteps)/(numSteps+1);
+					beta_stepsize = (beta_stepsize * numSteps)/(numSteps+1);
+					numSteps++;
+				}
+			}
+		}
+		else if(qlearning)
 		{
 			int minActionInt=0;
 			for(int i=0; i<numActions; i++)
@@ -319,6 +354,16 @@ public class SensorAgent implements AgentInterface
 		{
 			mto = false;
 			return "got it";
+		}
+		else if(message.equals("rlearning"))
+		{
+			rlearning = true;
+			return "Got it";
+		}
+		else if(message.equals("stop-rlearning"))
+		{
+			rlearning = false;
+			return "Got it";
 		}
 		return "none";
 	}

@@ -9,7 +9,7 @@ public class SensorExperiment
 {
 	public void run_experiment()
 	{
-		String[] policies = new String[8];
+		String[] policies = new String[10];
 		policies[0] = "greedy-policy";
 		policies[1] = "stop-greedy";
 		policies[2] = "mto";
@@ -18,11 +18,13 @@ public class SensorExperiment
 		policies[5] = "stop-discounted-qlearning";
 		policies[6] = "relative-qlearning";
 		policies[7] = "stop-relative-qlearning";
+		policies[8] = "rlearning";
+		policies[9] = "stop-rlearning";
 
 		double mean_data = 0.5;
-		for(int j=0; j<12; j++)
+		for(int j=0; j<20; j++)
 		{
-			for(int i=0; i<4; i++)
+			for(int i=0; i<5; i++)
 			{
 				RLGlue.RL_init();
 				String data = String.valueOf(mean_data);
@@ -35,7 +37,7 @@ public class SensorExperiment
 				RLGlue.RL_agent_message(policies[2*i+1]);
 				RLGlue.RL_cleanup();
 			}
-			mean_data = mean_data + 0.25;
+			mean_data = mean_data + 0.1;
 		}
 	}
 
@@ -43,11 +45,11 @@ public class SensorExperiment
 	{
 		RLGlue.RL_init();
 		RLGlue.RL_env_message("1.5");
-		RLGlue.RL_agent_message("mto");
-		System.out.println("MTO");
+		RLGlue.RL_agent_message("rlearning");
+		System.out.println("rlearning");
 		evaluateAgent();		
 		RLGlue.RL_agent_message("print-average-cost");
-		RLGlue.RL_agent_message("stop-mto");
+		RLGlue.RL_agent_message("stop-rlearning");
 		RLGlue.RL_cleanup();
 	}*/
 
