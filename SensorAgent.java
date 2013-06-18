@@ -33,14 +33,17 @@ public class SensorAgent implements AgentInterface
 	private int numActions;
 
 	private boolean freezeLearning = false;
+	private boolean startDecay = false;
 
 	//************************************ CONTROL ALGORITHM ***********************************
 
 	private boolean qlearning = false;
-	private boolean rel_qlearning = true;
+	private boolean rel_qlearning = false;
+	private boolean greedy = false;
+	private boolean mto = false;
 
-	double avg_reward = 0.0;//AVERAGE COST WHILE EVALUATING THE AGENT
-	double numOfSteps = 0.0;//NUMBER OF STEPS FOR CALCULATING AVERAGE COST
+	double avg_reward;//AVERAGE COST WHILE EVALUATING THE AGENT
+	double numOfSteps;//NUMBER OF STEPS FOR CALCULATING AVERAGE COST
 
 
 	int fixedState = 86;
@@ -50,6 +53,12 @@ public class SensorAgent implements AgentInterface
 
 	public void agent_init(String taskspec)
 	{
+
+		avg_reward = 0.0;
+		numOfSteps = 0.0;
+		numSteps = 1.0;
+		alpha_stepsize = 0.1;
+
 		TaskSpec spec = new TaskSpec(taskspec);
 		numStates = spec.getDiscreteObservationRange(0).getMax()+1;
 		numActions = spec.getDiscreteActionRange(0).getMax()+1;
@@ -117,8 +126,10 @@ public class SensorAgent implements AgentInterface
 
 			if(!freezeLearning){
 				valuefunction[lastActionInt][lastStateInt] = new_Q_sa;
-				alpha_stepsize = (alpha_stepsize * numSteps)/(numSteps+1);
-				numSteps++;
+				if(startDecay){ 
+					alpha_stepsize = (alpha_stepsize * numSteps)/(numSteps+1);
+					numSteps++;
+				}
 			}
 		}
 		else if(rel_qlearning)
@@ -144,8 +155,10 @@ public class SensorAgent implements AgentInterface
 
             if(!freezeLearning){
             	valuefunction[lastActionInt][lastStateInt] = new_Q_sa;
-            	alpha_stepsize = (alpha_stepsize*numSteps)/(numSteps+1);
-            	numSteps++;
+            	if(startDecay){
+            		alpha_stepsize = (alpha_stepsize*numSteps)/(numSteps+1);
+            		numSteps++;
+            	}
             }
 
         }
@@ -177,8 +190,10 @@ public class SensorAgent implements AgentInterface
 			double new_Q_sa = Q_sa + alpha_stepsize*(reward - Q_sa);
 			if(!freezeLearning){
 				valuefunction[lastActionInt][lastStateInt] = new_Q_sa;
-				alpha_stepsize = (alpha_stepsize*numSteps)/(numSteps+1);
-				numSteps++;
+				if(startDecay){
+					alpha_stepsize = (alpha_stepsize*numSteps)/(numSteps+1);
+					numSteps++;
+				}
 			}
 		}
 
@@ -194,8 +209,10 @@ public class SensorAgent implements AgentInterface
 
             if(!freezeLearning){
             	valuefunction[lastActionInt][lastStateInt] = new_Q_sa;
-            	alpha_stepsize = (alpha_stepsize*numSteps)/(numSteps+1);
-            	numSteps++;
+            	if(startDecay){
+            		alpha_stepsize = (alpha_stepsize*numSteps)/(numSteps+1);
+            		numSteps++;
+            	}
             }
         }
 
@@ -253,24 +270,125 @@ public class SensorAgent implements AgentInterface
 			System.out.println("Most visited state is "+ max);
 			return "Got it";
 		}
+		else if(message.equals("start-decay"))
+		{
+			startDecay = true;
+			return "Got it";
+		}
+		else if(message.equals("stop-decay"))
+		{
+			startDecay = false;
+			return "Got it";
+		}
+		else if(message.equals("greedy-policy"))
+		{
+			greedy = true;
+			return "Got it";
+		}
+		else if(message.equals("stop-greedy"))
+		{
+			greedy = false;
+			return "Got it";
+		}
+		else if(message.equals("discounted-qlearning"))
+		{
+			qlearning = true;
+			return "Got it";	
+		}
+		else if(message.equals("stop-discounted-qlearning"))
+		{
+			qlearning = false;
+			return "Got it";
+		}
+		else if(message.equals("relative-qlearning"))
+		{
+			rel_qlearning = true;
+			return "Got it";
+		}
+		else if(message.equals("stop-relative-qlearning"))
+		{
+			rel_qlearning = false;
+			return "Got it";
+		}
+		else if(message.equals("mto"))
+		{
+			mto = true;
+			return "Got it";
+		}
+		else if(message.equals("stop-mto"))
+		{
+			mto = false;
+			return "got it";
+		}
 		return "none";
 	}
 
 	public int egreedy(int state)
 	{
-		int maxValue = state%51;
-		if(randGenerator.nextDouble()<epsilon)
+		
+		if(mto)
 		{
-			return randGenerator.nextInt(maxValue+1);
-		}
-		else
-		{
-			int minActionInt = 0;
-			for(int i=0; i<maxValue+1; i++)
+			int energy = state%51;
+			int data = state/51;
+
+			double E_Y = Math.log(11)/Math.log(2.73);
+			double value = 0.99*(E_Y + 0.001*(energy-0.1*data));
+			if(value>=energy)
 			{
-				if(valuefunction[i][state]<valuefunction[minActionInt][state]) minActionInt = i;
+				if(data > (int)(Math.log(1+energy)/Math.log(2.73))) return energy;
+				else
+				{
+					double energy_needed = Math.exp(data/1.0) - 1;
+					int energy_required = ((int) energy_needed)+1;
+					int t = Math.min(energy,energy_required);
+					return t;
+				}
 			}
-			return minActionInt;
+			else
+			{
+				if(data > (int)(Math.log(1+value)/Math.log(2.73))) return (int)value;
+				else
+				{
+					double energy_needed = Math.exp(data/1.0) - 1;
+					int energy_required = ((int) energy_needed)+1;
+					int t = Math.min((int)value,energy_required);
+					return t;
+				}
+			}
+		}
+		else if(greedy)
+		{
+			int energy = state%51;
+			int data = state/51;
+
+			if(data > (int)(Math.log(1+energy)/Math.log(2.73))) return energy;
+			else
+			{
+				//System.out.println("The state is "+ state);
+				double energy_needed = Math.exp(data/1.0) - 1;
+				int energy_required = ((int) energy_needed)+1;
+
+				int t = Math.min(energy,energy_required);
+
+				//System.out.println("The action is "+ t);
+				return t;
+			}
+		}
+		else{
+			int maxValue = state%51;
+			if(randGenerator.nextDouble()<epsilon)
+			{
+				return randGenerator.nextInt(maxValue+1);
+			}
+			else
+			{
+				int minActionInt = 0;
+				for(int i=0; i<maxValue+1; i++)
+				{
+					if(valuefunction[i][state]<valuefunction[minActionInt][state]) minActionInt = i;
+				}
+				return minActionInt;
+			}
 		}
 	}
 

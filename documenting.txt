@@ -1,0 +1,232 @@
+
+MONDAY 17TH JUNE 2013
+
+Policy is greedy-policy
+Mean data rate is 0.0
+The average cost is 0.0
+
+Policy is discounted-qlearning
+Mean data rate is 0.0
+The average cost is 0.0
+
+Policy is relative-qlearning
+Mean data rate is 0.0
+The average cost is 0.0
+
+Policy is greedy-policy
+Mean data rate is 0.5
+The average cost is 0.00248979999999989
+
+Policy is discounted-qlearning
+Mean data rate is 0.5
+The average cost is 0.008686500000001766
+
+Policy is relative-qlearning
+Mean data rate is 0.5
+The average cost is 0.008698900000001555
+
+Policy is greedy-policy
+Mean data rate is 1.0
+The average cost is 0.05635910000000131
+
+Policy is discounted-qlearning
+Mean data rate is 1.0
+The average cost is 0.07186570000000447
+
+Policy is relative-qlearning
+Mean data rate is 1.0
+The average cost is 0.07130060000000384
+
+Policy is greedy-policy
+Mean data rate is 1.5
+The average cost is 0.8081710999998941
+
+Policy is discounted-qlearning
+Mean data rate is 1.5
+The average cost is 0.6032094999999267
+
+Policy is relative-qlearning
+Mean data rate is 1.5
+The average cost is 0.5452601999999617
+
+Policy is greedy-policy
+Mean data rate is 2.0
+The average cost is 40.92608699999781
+
+Policy is discounted-qlearning
+Mean data rate is 2.0
+The average cost is 6.353279900000249
+
+Policy is relative-qlearning
+Mean data rate is 2.0
+The average cost is 6.310748400000057
+
+Policy is greedy-policy
+Mean data rate is 2.5
+The average cost is 47.00236200000053
+
+Policy is discounted-qlearning
+Mean data rate is 2.5
+The average cost is 45.3272835999957
+
+Policy is relative-qlearning
+Mean data rate is 2.5
+The average cost is 45.32263110000162
+
+RunExperiment Complete
+
+
+THINGS TO DO:
+1) IMPLEMENT HYPEREXPONENTIAL DISTRIBUTION.
+2) IMPLEMENT OTHER ALGORITHMS LIKE TO, UNBUFFERED AND MTO. (implemented mto, and i think that would be enough as it is supposedly better than to and unbuffered)
+3) PLOT THE GRAPH WITH r1 = 1 and r2 = 0 FOR ALL THE ALGORITHMS AT AN INTERVAL OF 0.25 MEAN DATA RATE.
+4) OBSERVE THE SAME GRAPH WITH OTHER r1 and r2 VALUES WITH HYPEREXPONENTIAL ALSO.
+
+
+
+
+Policy is greedy-policy
+Mean data rate is 0.5
+The average cost is 0.0024196000000000035
+Policy is mto
+Mean data rate is 0.5
+The average cost is 0.2506330000000117
+Policy is discounted-qlearning
+Mean data rate is 0.5
+The average cost is 0.008285000000000849
+Policy is relative-qlearning
+Mean data rate is 0.5
+The average cost is 0.008515200000000875
+Policy is greedy-policy
+Mean data rate is 0.75
+The average cost is 0.013987700000000006
+Policy is mto
+Mean data rate is 0.75
+The average cost is 1.1262193000000207
+Policy is discounted-qlearning
+Mean data rate is 0.75
+The average cost is 0.027721599999998202
+Policy is relative-qlearning
+Mean data rate is 0.75
+The average cost is 0.027663400000000733
+Policy is greedy-policy
+Mean data rate is 1.0
+The average cost is 0.056349400000004796
+Policy is mto
+Mean data rate is 1.0
+The average cost is 24.502187299999036
+Policy is discounted-qlearning
+Mean data rate is 1.0
+The average cost is 0.07148449999999708
+Policy is relative-qlearning
+Mean data rate is 1.0
+The average cost is 0.07182020000000414
+Policy is greedy-policy
+Mean data rate is 1.25
+The average cost is 0.20374860000000714
+Policy is mto
+Mean data rate is 1.25
+The average cost is 47.306255100003916
+Policy is discounted-qlearning
+Mean data rate is 1.25
+The average cost is 0.18824639999999832
+Policy is relative-qlearning
+Mean data rate is 1.25
+The average cost is 0.18234799999999765
+Policy is greedy-policy
+Mean data rate is 1.5
+The average cost is 0.8069471000000105
+Policy is mto
+Mean data rate is 1.5
+The average cost is 48.2833027999995
+Policy is discounted-qlearning
+Mean data rate is 1.5
+The average cost is 0.5420991000000661
+Policy is relative-qlearning
+Mean data rate is 1.5
+The average cost is 0.579978999999966
+Policy is greedy-policy
+Mean data rate is 1.75
+The average cost is 5.444726999999234
+Policy is mto
+Mean data rate is 1.75
+The average cost is 48.59769090000338
+Policy is discounted-qlearning
+Mean data rate is 1.75
+The average cost is 1.5366376999999254
+Policy is relative-qlearning
+Mean data rate is 1.75
+The average cost is 1.56539929999994
+Policy is greedy-policy
+Mean data rate is 2.0
+The average cost is 40.89171430000286
+Policy is mto
+Mean data rate is 2.0
+The average cost is 48.74484100000077
+Policy is discounted-qlearning
+Mean data rate is 2.0
+The average cost is 6.315271900000133
+Policy is relative-qlearning
+Mean data rate is 2.0
+The average cost is 6.3531028999998895
+Policy is greedy-policy
+Mean data rate is 2.25
+The average cost is 45.98042899999889
+Policy is mto
+Mean data rate is 2.25
+The average cost is 48.828156500000134
+Policy is discounted-qlearning
+Mean data rate is 2.25
+The average cost is 40.52100939999946
+Policy is relative-qlearning
+Mean data rate is 2.25
+The average cost is 40.61132130000299
+Policy is greedy-policy
+Mean data rate is 2.5
+The average cost is 47.00621369999914
+Policy is mto
+Mean data rate is 2.5
+The average cost is 48.87974560000122
+Policy is discounted-qlearning
+Mean data rate is 2.5
+The average cost is 45.312494899999585
+Policy is relative-qlearning
+Mean data rate is 2.5
+The average cost is 45.327376600002324
+Policy is greedy-policy
+Mean data rate is 2.75
+The average cost is 47.43401679999784
+Policy is mto
+Mean data rate is 2.75
+The average cost is 48.91359620000014
+Policy is discounted-qlearning
+Mean data rate is 2.75
+The average cost is 46.47872119999825
+Policy is relative-qlearning
+Mean data rate is 2.75
+The average cost is 46.47524460000153
+Policy is greedy-policy
+Mean data rate is 3.0
+The average cost is 47.66047950000178
+Policy is mto
+Mean data rate is 3.0
+The average cost is 48.93677319999462
+Policy is discounted-qlearning
+Mean data rate is 3.0
+The average cost is 46.97879920000804
+Policy is relative-qlearning
+Mean data rate is 3.0
+The average cost is 46.98041480000459
+Policy is greedy-policy
+Mean data rate is 3.25
+The average cost is 47.79602760000197
+Policy is mto
+Mean data rate is 3.25
+The average cost is 48.95299730000027
+Policy is discounted-qlearning
+Mean data rate is 3.25
+The average cost is 47.25169170000122
+Policy is relative-qlearning
+Mean data rate is 3.25
+The average cost is 47.25070319999465
+RunExperiment Complete

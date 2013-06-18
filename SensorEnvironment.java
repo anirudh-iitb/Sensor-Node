@@ -14,10 +14,12 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
 public class SensorEnvironment implements EnvironmentInterface
 {
 	WorldDescription theWorld;
+	double mean_x = 1.5;
+	double mean_y = 10.0;
 
 	public String env_init()
 	{
-		theWorld = new WorldDescription();
+		
 		TaskSpecVRLGLUE3 theTaskSpecObject = new TaskSpecVRLGLUE3();
 		theTaskSpecObject.setDiscountFactor(0.9d);
 		theTaskSpecObject.addDiscreteObservation(new IntRange(0,2600));
@@ -30,6 +32,7 @@ public class SensorEnvironment implements EnvironmentInterface
 
 	public Observation env_start()
 	{
+		theWorld = new WorldDescription(mean_x,mean_y);
 		Observation observation = new Observation(1,0,0);
 		observation.setInt(0,theWorld.getState());
 		return observation;
@@ -54,6 +57,8 @@ public class SensorEnvironment implements EnvironmentInterface
 
 	public String env_message(String message)
 	{
+		double x = Double.parseDouble(message);
+		mean_x = x;
 		return "none";
 	}
 
@@ -87,10 +92,14 @@ class WorldDescription
 	private double r1 = 1.0;
 	private double r2 = 0.0;
 
-	public WorldDescription()
+	public WorldDescription(double x, double y)
 	{
 		//q_k = randGenerator.nextInt(DMAX+1);
 		//e_k = randGenerator.nextInt(EMAX+1);
+		//SETTING LAMBDA_X AND LAMBDA_Y
+		lambda_x = x;
+		lambda_y = y;
+
 		//GIVING FULL BUFFERS INITIALLY
 		q_k = 0;
 		e_k = 0;
