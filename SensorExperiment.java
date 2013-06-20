@@ -7,7 +7,7 @@ import org.rlcommunity.rlglue.codec.RLGlue;
 
 public class SensorExperiment
 {
-	public void run_experiment()
+	/*public void run_experiment()
 	{
 		String[] policies = new String[10];
 		policies[0] = "greedy-policy";
@@ -30,28 +30,31 @@ public class SensorExperiment
 				String data = String.valueOf(mean_data);
 				RLGlue.RL_env_message(data);		
 				RLGlue.RL_agent_message(policies[2*i]);
-				System.out.println("Policy is "+policies[2*i]);
+				//System.out.println("Policy is "+policies[2*i]);
 				evaluateAgent();
-				System.out.println("Mean data rate is "+ mean_data);
+				//System.out.println("Mean data rate is "+ mean_data);
 				RLGlue.RL_agent_message("print-average-cost");
 				RLGlue.RL_agent_message(policies[2*i+1]);
 				RLGlue.RL_cleanup();
 			}
+			System.out.println();
 			mean_data = mean_data + 0.1;
 		}
-	}
+	}*/
 
-	/*public void run_experiment()
+	public void run_experiment()
 	{
 		RLGlue.RL_init();
 		RLGlue.RL_env_message("1.5");
-		RLGlue.RL_agent_message("rlearning");
-		System.out.println("rlearning");
+		RLGlue.RL_agent_message("relative-qlearning");
+		System.out.println("rel_qlearning");
 		evaluateAgent();		
 		RLGlue.RL_agent_message("print-average-cost");
-		RLGlue.RL_agent_message("stop-rlearning");
+		RLGlue.RL_agent_message("stop-relative-qlearning");
+		RLGlue.RL_agent_message("print-maximum-visited-state");
+		RLGlue.RL_agent_message("print-policy");
 		RLGlue.RL_cleanup();
-	}*/
+	}
 
 	public void evaluateAgent()
 	{

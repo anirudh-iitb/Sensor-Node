@@ -287,7 +287,7 @@ public class SensorAgent implements AgentInterface
 		}
 		else if(message.equals("print-average-cost"))
 		{
-			System.out.println("The average cost is " + avg_reward);
+			System.out.print(avg_reward+",");
 			return "Got it";
 		}
 		else if(message.equals("print-value-function"))

@@ -122,8 +122,8 @@ class WorldDescription
 
 	public double getReward(int action)
 	{
-		//return (r1*Math.max((q_k - conversion(action)),0))+(r2*action);
-		return (r1*q_k+r2*action);
+		return (r1*Math.max((q_k - conversion(action)),0))+(r2*action);
+		//return (r1*q_k+r2*action);
 	}
 
 	public void updateState(int action)
